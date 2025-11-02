@@ -143,19 +143,19 @@ class Widget final : public W {
         callback_fn_ = cb;
         W::callback(shim, (void *)&callback_fn_);
     }
-    
+
     void handle(std::function<bool(Widget *, int)> &&cb) { handler_fn_ = cb; }
 
     void draw(std::function<void(Widget *)> &&cb) { drawer_fn_ = cb; }
 
     void center_of(Fl_Widget *w) {
         assert(w->w() != 0 && w->h() != 0);
-        double sw = this->w();
-        double sh = this->h();
-        double ww = w->w();
-        double wh = w->h();
-        auto sx = (ww - sw) / 2.0;
-        auto sy = (wh - sh) / 2.0;
+        int sw = this->w();
+        int sh = this->h();
+        int ww = w->w();
+        int wh = w->h();
+        auto sx = (ww - sw) >> 1;
+        auto sy = (wh - sh) >> 1;
         auto wx = [=] {
             if (w->as_window()) {
                 return 0;
@@ -183,11 +183,11 @@ class Widget final : public W {
 
     void center_x(Fl_Widget *w) {
         assert(w->w() != 0 && w->h() != 0);
-        double sw = this->w();
-        double sh = this->h();
-        double ww = w->w();
-        double wh = w->h();
-        auto sx = (ww - sw) / 2.0;
+        int sw = this->w();
+        int sh = this->h();
+        int ww = w->w();
+        int wh = w->h();
+        auto sx = (ww - sw) >> 1;
         auto sy = this->y();
         auto wx = [=] {
             if (w->as_window()) {
@@ -202,12 +202,12 @@ class Widget final : public W {
 
     void center_y(Fl_Widget *w) {
         assert(w->w() != 0 && w->h() != 0);
-        double sw = this->w();
-        double sh = this->h();
-        double ww = w->w();
-        double wh = w->h();
+        int sw = this->w();
+        int sh = this->h();
+        int ww = w->w();
+        int wh = w->h();
         auto sx = this->x();
-        auto sy = (wh - sh) / 2.0;
+        auto sy = (wh - sh) >> 1;
         auto wy = [=] {
             if (w->as_window()) {
                 return 0;
